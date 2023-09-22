@@ -8,10 +8,6 @@
 #ifndef MCAL_AVR_REG_H_
 #define MCAL_AVR_REG_H_
 
-/*
- * NULL
- */
-//#define NULL  ((void*)0)
 
 /*
  * DIO REGISTERS
