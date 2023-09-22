@@ -27,7 +27,7 @@ extern Timer2_Configs_t Timer2_Configs;
 /***********************************************************************************************************************/
 /***********************************************************************************************************************/
 
-ES_t TIMER2_enuInit(Timer2_Configs_t Copy_strTimer2Configs);
+ES_t TIMER2_enuInit(Timer2_Configs_t * Copy_strTimer2Configs);
 ES_t TIMER2_enuSetOutputCompareMode(Timer2_OCM_t Copy_enuTimer2_OCM);
 ES_t TIMER2_enuSetWaveGenMode(Timer2_WGM_t Copy_enuTimer2_WGM);
 ES_t TIMER2_enuSelect_Clock(Timer2_Pres_t Copy_enuTimer2_Pres);

@@ -17,7 +17,7 @@
  *   0	  0	    0 	  0	   0	 1	  0	   0	TCCR2 = 0x13 *
  *************************************************************/
 
-ES_t TIMER2_enuInit(Timer2_Configs_t Copy_strTimer2Configs){
+ES_t TIMER2_enuInit(Timer2_Configs_t * Copy_pstrTimer2Configs){
 	u8 Local_enuErrorState = ES_NOK;
 
 	TCNT2 = 0;	//Empty
@@ -26,7 +26,7 @@ ES_t TIMER2_enuInit(Timer2_Configs_t Copy_strTimer2Configs){
 	/*******************************************/
 	/*********** Wave Generation Mode **********/
 	/*******************************************/
-	switch(Copy_strTimer2Configs.WaveGenerationMode){
+	switch(Copy_pstrTimer2Configs->WaveGenerationMode){
 	case Timer2_OVF_Mode:
 		TCCR2 &= ~(MASK_BIT<<WGM20);
 		TCCR2 &= ~(MASK_BIT<<WGM21);
@@ -58,20 +58,20 @@ ES_t TIMER2_enuInit(Timer2_Configs_t Copy_strTimer2Configs){
 		/*******************************************/
 		/*********** OUTPUT COMPARE MODE ***********/
 		/*******************************************/
-		if(Copy_strTimer2Configs.OutputCompareMode >= Timer2_OC2_Disabled
-				&& Copy_strTimer2Configs.OutputCompareMode <= Timer2_OC2_Set){
+		if(Copy_pstrTimer2Configs->OutputCompareMode >= Timer2_OC2_Disabled
+				&& Copy_pstrTimer2Configs->OutputCompareMode <= Timer2_OC2_Set){
 
-			TCCR2 |= (Copy_strTimer2Configs.OutputCompareMode<<COM20);
+			TCCR2 |= (Copy_pstrTimer2Configs->OutputCompareMode<<COM20);
 
 			/*******************************************/
 			/********** Clock Mode Selection ***********/
 			/*******************************************/
-			if(Copy_strTimer2Configs.ClockSourceSelect >= Timer2_PRES_Disabled
-					&& Copy_strTimer2Configs.ClockSourceSelect <= Timer2_PRES_1024){
+			if(Copy_pstrTimer2Configs->ClockSourceSelect >= Timer2_PRES_Disabled
+					&& Copy_pstrTimer2Configs->ClockSourceSelect <= Timer2_PRES_1024){
 
-				TCCR2 |= (Copy_strTimer2Configs.ClockSourceSelect<<CS20);
+				TCCR2 |= (Copy_pstrTimer2Configs->ClockSourceSelect<<CS20);
 
-				Local_enuErrorState = TIMER2_enuUpdatePrescaler(Copy_strTimer2Configs.ClockSourceSelect);
+				Local_enuErrorState = TIMER2_enuUpdatePrescaler(Copy_pstrTimer2Configs->ClockSourceSelect);
 			}
 			else{
 				Local_enuErrorState = ES_OUT_OF_RANGE;
