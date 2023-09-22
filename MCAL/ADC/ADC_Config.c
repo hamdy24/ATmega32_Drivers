@@ -2,7 +2,8 @@
  * ADC_Config.c
  *
  *  Created on: Nov 15, 2021
- *      Author: hamdy
+ *  Author: 	 Hamdy Aouf
+ *	Description: Here is the configuration object helper to use in initialization
  */
 
 

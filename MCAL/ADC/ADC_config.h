@@ -2,7 +2,7 @@
  * ADC_config.h
  *
  *  Created on: Nov 15, 2021
- *      Author: hamdy
+ *	Description: File of all needed parameters or configurations would be used to control the ADC
  */
 
 #ifndef MCAL_ADC_ADC_CONFIG_H_
@@ -78,21 +78,5 @@ typedef struct {
 	ADC_VREF_enuType VREF :3;
 	ADC_ADJ_enuType ADJ_Direction :1;
 } ADC_Cfg_t;
-
-
-///********************************************************************************************/
-///********** PRES_2	PRES_4	 PRES_8	  PRES_16	PRES_32	  PRES_64	 PRES_128 ***************/
-///********************************************************************************************/
-//#define ADC_PRES	PRES_64
-//
-///***********************************************************************/
-///**************** AREF_REF	/	AVCC_REF	/	INTERNAL_REF *******************/
-///***********************************************************************/
-//#define ADC_VREF	AREF_REF
-//
-///***********************************************************************/
-///**************** LEFT_ADJ	 RIGHT_ADJ *********************************/
-///***********************************************************************/
-//#define ADC_ADJ		LEFT_ADJ
 
 #endif /* MCAL_ADC_ADC_CONFIG_H_ */

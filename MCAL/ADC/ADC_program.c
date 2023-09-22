@@ -2,18 +2,19 @@
  * ADC_program.c
  *
  *  Created on: Nov 15, 2021
- *      Author: hamdy
+ *  Author: 	 Hamdy Aouf
+ *	Description: Here are all the Interfaces definitions of the ADC
  */
 #include "ADC_private.h"
 
 
-ES_t ADC_enuInit(ADC_Cfg_t Copy_strADC_Configs) {
+ES_t ADC_enuInit(ADC_Cfg_t * Copy_pstrADC_Configs) {
 	ES_t Local_enuErrorState = ES_NOK;
 	/***************************************************************************
 	 ************************ ADC PreScaler Initialization *********************
 	 **************************************************************************/
 
-	switch (Copy_strADC_Configs.PRES) {
+	switch (Copy_pstrADC_Configs->PRES) {
 	case ADC_PRES_2:
 		ADCSRA = PRES2_DIVISION_FACTOR_SET;
 		break;
@@ -47,7 +48,7 @@ ES_t ADC_enuInit(ADC_Cfg_t Copy_strADC_Configs) {
 		 ********* Voltage Reference Initialization ************
 		 *******************************************************/
 
-		switch (Copy_strADC_Configs.VREF) {
+		switch (Copy_pstrADC_Configs->VREF) {
 		case AREF_REF:
 			/* REFS1_BIT_6 -> bit7   REFS0_BIT_6 -> bit6 */
 			ADMUX &= ~(MASK_BIT << REFS0_SEL_BIT_6);
@@ -72,11 +73,11 @@ ES_t ADC_enuInit(ADC_Cfg_t Copy_strADC_Configs) {
 		 **********************************************************************/
 
 		if (ES_OUT_OF_RANGE != Local_enuErrorState) {
-			if (Copy_strADC_Configs.ADJ_Direction == ADC_LEFT_ADJ) {
+			if (Copy_pstrADC_Configs->ADJ_Direction == ADC_LEFT_ADJ) {
 				ADC_DataADJ_Direction = ADC_LEFT_ADJ;
 				/******* ADLAR is Bit 5 of ADMUX ******/
 				ADMUX |= (MASK_BIT << ADLAR_BIT_5);
-			} else if (Copy_strADC_Configs.ADJ_Direction == ADC_RIGHT_ADJ) {
+			} else if (Copy_pstrADC_Configs->ADJ_Direction == ADC_RIGHT_ADJ) {
 				ADC_DataADJ_Direction = ADC_RIGHT_ADJ;
 				/******* ADLAR is Bit 5 of ADMUX ******/
 				ADMUX &= ~(MASK_BIT << ADLAR_BIT_5);
@@ -89,7 +90,7 @@ ES_t ADC_enuInit(ADC_Cfg_t Copy_strADC_Configs) {
 		 **********************************************************************************/
 
 		if (ES_OUT_OF_RANGE != Local_enuErrorState) {
-			if (Copy_strADC_Configs.INT_Src <= ADC_TIMER_1_CAPTURE_EVENT) {
+			if (Copy_pstrADC_Configs->INT_Src <= ADC_TIMER_1_CAPTURE_EVENT) {
 				// we disable it first till we adjust SFIOR Bits first then enable it again as
 				// if it was enabled previously from previous call of the function and i called it again
 				// the following masking process will force the ADC to free running mode as its bits will be 000
@@ -97,19 +98,19 @@ ES_t ADC_enuInit(ADC_Cfg_t Copy_strADC_Configs) {
 				ADCSRA &= ~(MASK_BIT << ADC_AUTO_TRIGGER_BIT_5);
 
 				SFIOR &= SFIOR_MASK_VALUE; //0x0001 1111
-				SFIOR |= (Copy_strADC_Configs.INT_Src << ADC_TRIGGER_SELECT_BIT_5); // here we set the ADTS
+				SFIOR |= (Copy_pstrADC_Configs->INT_Src << ADC_TRIGGER_SELECT_BIT_5); // here we set the ADTS
 
 				ADCSRA |= (MASK_BIT << ADC_AUTO_TRIGGER_BIT_5); // without this one set...selecting interrupt source has no effect
 
-				if(Copy_strADC_Configs.INT_Src == ADC_FREE_RUNNIG){
+				if(Copy_pstrADC_Configs->INT_Src == ADC_FREE_RUNNIG){
 					// if it is free running mode we start conversion for the first time only
 					ADCSRA |= (MASK_BIT << ADC_START_CONVERSION_BIT);
 				}
 
-				if (Copy_strADC_Configs.ChannelNum <= ADC_MAX_CHANNEL_NUM) {
+				if (Copy_pstrADC_Configs->ChannelNum <= ADC_MAX_CHANNEL_NUM) {
 					// in single ended channel the channel number is same with pin number
 					ADMUX &= ~ADMUX_CHANNELS_MASK_VALUE;  //0xddd0 0000 at ADMUX
-					ADMUX |= Copy_strADC_Configs.ChannelNum;
+					ADMUX |= Copy_pstrADC_Configs->ChannelNum;
 
 					Local_enuErrorState = ES_OK;
 				} else {
@@ -198,10 +199,10 @@ ES_t ADC_enuFully_ReadADC_Register(u16 * Copy_pu16Full_Value) {
 /*************************************************************************
  * This function enables auto triggering and sets the bits for the desired INT Source
  ************************************************************************/
-ES_t  ADC_enuSetAutoTriggering_EN(ADC_INT_Sources_enuType Copy_u8INT_Source, bool Copy_enuBooleanValue){
+ES_t  ADC_enuSetAutoTriggering_EN(ADC_INT_Sources_enuType Copy_u8INT_Source, bool Copy_IsEnabled){
 	ES_t Local_enuErrorState = ES_NOK;
 
-	if(Copy_enuBooleanValue == true){
+	if(Copy_IsEnabled == true){
 		if (Copy_u8INT_Source <= ADC_TIMER_1_CAPTURE_EVENT
 				&& Copy_u8INT_Source >= ADC_FREE_RUNNIG) {
 	// we disable it first till we adjust SFIOR Bits first then enable it again as
@@ -224,7 +225,7 @@ ES_t  ADC_enuSetAutoTriggering_EN(ADC_INT_Sources_enuType Copy_u8INT_Source, boo
 			Local_enuErrorState = ES_OUT_OF_RANGE;
 		}
 	}
-	else if(Copy_enuBooleanValue == false){
+	else if(Copy_IsEnabled == false){
 		ADCSRA &= ~(MASK_BIT << ADC_AUTO_TRIGGER_BIT_5);
 	}
 
@@ -304,7 +305,7 @@ ES_t ADC_enuStartPolling(void) {
 	return Local_enuErrorState;
 }
 
-ES_t ADC_enuCall_Back(volatile void (*Copy_pfun_AppFun)(void)) {
+ES_t ADC_enuCall_Back(CallBackFunc_t Copy_pfun_AppFun) {
 	ES_t Local_enuErrorState = ES_NOK;
 	if (Copy_pfun_AppFun != NULL) {
 		ADC_pfunISR_Fun = Copy_pfun_AppFun;

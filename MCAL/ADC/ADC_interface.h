@@ -2,7 +2,8 @@
  * ADC_interface.h
  *
  *  Created on: Nov 15, 2021
- *      Author: hamdy
+ *  Author: 	 Hamdy Aouf
+ *	Description: File of Interfaces used to control the ADC of the ATmega32
  */
 
 #ifndef MCAL_ADC_ADC_INTERFACE_H_
@@ -18,7 +19,7 @@ extern ADC_Cfg_t ADC_Configs;
 /*************************************************************************
  * This function Initializes the ADC
  ************************************************************************/
-ES_t  ADC_enuInit(ADC_Cfg_t Copy_strADC_Configs);
+ES_t  ADC_enuInit(ADC_Cfg_t * Copy_pstrADC_Configs);
 
 /*************************************************************************
  * This function Sets the bit that start the conversion
@@ -39,7 +40,7 @@ ES_t  ADC_enuFully_ReadADC_Register(u16 * Copy_pu16Full_Value);
 /*************************************************************************
  * This function enables/disables auto triggering and handles the bits for the desired INT Source
  ************************************************************************/
-ES_t  ADC_enuSetAutoTriggering_EN(ADC_INT_Sources_enuType Copy_u8INT_Source, bool Copy_strBooleanValue);
+ES_t  ADC_enuSetAutoTriggering_EN(ADC_INT_Sources_enuType Copy_u8INT_Source, bool Copy_IsEnabled);
 
 
 /*************************************************************************
@@ -68,7 +69,7 @@ ES_t  ADC_enuStartPolling(void);
 /*************************************************************************
  * This function for APP CallBacks
  ************************************************************************/
-ES_t  ADC_enuCall_Back(volatile void (*Copy_pfun_AppFun) (void));
+ES_t  ADC_enuCall_Back(CallBackFunc_t Copy_pfun_AppFun);
 
 
 
