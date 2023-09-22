@@ -2,7 +2,8 @@
  * EXTI_config.h
  *
  *  Created on: Oct 30, 2021
- *      Author: hamdy
+ *  Author: 	 Hamdy Aouf
+ *	Description: File of all needed parameters or configurations would be used to control the EXTI
  */
 
 #ifndef MCAL_EXTI_EXTI_CONFIG_H_

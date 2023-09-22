@@ -2,7 +2,8 @@
  * EXTI_config.c
  *
  *  Created on: Oct 30, 2021
- *      Author: hamdy
+ *  Author: 	 Hamdy Aouf
+ *	Description: Here is the configuration array helper to use in initialization
  */
 #include "../../LIBRARIES/errorstate.h"
 #include "../../LIBRARIES/stdTypes.h"
