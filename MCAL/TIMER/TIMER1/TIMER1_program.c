@@ -21,7 +21,7 @@
  *   0		  0		  d		  0		  0		  0		  0		  0	   *
  *******************************************************************/
 
-ES_t TIMER1_enuInit(Timer1_Configs_t Copy_strTimer1Configs) {
+ES_t TIMER1_enuInit(Timer1_Configs_t * Copy_pstrTimer1Configs) {
 	ES_t Local_enuErrorState = ES_NOK;
 
 	/*** Interrupts Initialization ***/
@@ -41,30 +41,30 @@ ES_t TIMER1_enuInit(Timer1_Configs_t Copy_strTimer1Configs) {
 	/*******************************************/
 	/*** Wave Generation Mode Initialization ***/
 	/*******************************************/
-	if(Copy_strTimer1Configs.WaveGenerationMode >= Timer1_OVF_Mode
-			&& Copy_strTimer1Configs.WaveGenerationMode<= Timer1_PWM_Fast_OCR1A){
+	if(Copy_pstrTimer1Configs->WaveGenerationMode >= Timer1_OVF_Mode
+			&& Copy_pstrTimer1Configs->WaveGenerationMode<= Timer1_PWM_Fast_OCR1A){
 
 		// AND with 3  (binary 00 11) to get the first two bits only from the value
-		TCCR1A |= ( (Copy_strTimer1Configs.WaveGenerationMode & MASK_FIRST_TWO_BITS)<<WGM10); // 14=> 11 10 & 00 11 = 10
+		TCCR1A |= ( (Copy_pstrTimer1Configs->WaveGenerationMode & MASK_FIRST_TWO_BITS)<<WGM10); // 14=> 11 10 & 00 11 = 10
 		// AND with 12 (binary 11 00) to get the second two bits only from the value
-		TCCR1B |= ( (Copy_strTimer1Configs.WaveGenerationMode & MASK_SECOND_TWO_BITS)<<WGM12); // 14=> 11 10 & 11 00 = 11
+		TCCR1B |= ( (Copy_pstrTimer1Configs->WaveGenerationMode & MASK_SECOND_TWO_BITS)<<WGM12); // 14=> 11 10 & 11 00 = 11
 
 		/*******************************************/
 		/*********** OUTPUT COMPARE MODE ***********/
 		/*******************************************/
-		if(Copy_strTimer1Configs.OutputCompareMode >= Timer1_OC1A_B_Disabled
-			&& Copy_strTimer1Configs.OutputCompareMode <= Timer1_OC1A_B_Set){
+		if(Copy_pstrTimer1Configs->OutputCompareMode >= Timer1_OC1A_B_Disabled
+			&& Copy_pstrTimer1Configs->OutputCompareMode <= Timer1_OC1A_B_Set){
 
-			TCCR1A |= (Copy_strTimer1Configs.OutputCompareMode<<COM1B0);
-			TCCR1A |= (Copy_strTimer1Configs.OutputCompareMode<<COM1A0);
+			TCCR1A |= (Copy_pstrTimer1Configs->OutputCompareMode<<COM1B0);
+			TCCR1A |= (Copy_pstrTimer1Configs->OutputCompareMode<<COM1A0);
 
 			/*******************************************/
 			/******* Clock Source Initialization *******/
 			/*******************************************/
-			if(Copy_strTimer1Configs.ClockSourceSelect >= Timer1_PRES_Disabled
-				&& Copy_strTimer1Configs.ClockSourceSelect <= Timer1_T1_Rising){
+			if(Copy_pstrTimer1Configs->ClockSourceSelect >= Timer1_PRES_Disabled
+				&& Copy_pstrTimer1Configs->ClockSourceSelect <= Timer1_T1_Rising){
 
-				TCCR1B |= (Copy_strTimer1Configs.ClockSourceSelect<<CS10);
+				TCCR1B |= (Copy_pstrTimer1Configs->ClockSourceSelect<<CS10);
 			}
 			else{
 				Local_enuErrorState = ES_OUT_OF_RANGE;
