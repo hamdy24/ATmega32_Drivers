@@ -9,6 +9,10 @@
 #define MCAL_TIMER_TIMER_CONFIG_H_
 
 
+#include "../../../LIBRARIES/errorstate.h"
+#include "../../../LIBRARIES/common.h"
+#include "../../../LIBRARIES/stdTypes.h"
+
 /******************************************************************************
  ************************* Timer0 Configuration Types *************************
  ******************************************************************************/

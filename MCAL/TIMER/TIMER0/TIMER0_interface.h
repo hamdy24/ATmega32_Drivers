@@ -25,7 +25,7 @@ extern Timer0_Configs_t Timer0_Configs;
 /************************************************** TIMER0 *************************************************************/
 /***********************************************************************************************************************/
 
-ES_t TIMER0_enuInit(Timer0_Configs_t Copy_strTimer0Configs);
+ES_t TIMER0_enuInit(Timer0_Configs_t * Copy_pstrTimer0Configs);
 ES_t TIMER0_enuSetOutputCompareMode(Timer0_OCM_t Copy_enuTimer0_OCM);
 ES_t TIMER0_enuSetWaveGenMode(Timer0_WGM_t Copy_enuTimer0_WGM);
 ES_t TIMER0_enuSelect_Clock(Timer0_Pres_t Copy_enuTimer0_Pres);
