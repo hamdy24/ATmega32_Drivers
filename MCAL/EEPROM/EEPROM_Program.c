@@ -148,9 +148,9 @@ ES_t EEPROM_enuSetAppCallBack(CallBackFunc_t Copy_pfunAppFunc){
 }
 
 ISR(VECT_EEPROM_READY){
-//
-//	if(NULL != EEPROM_pfunISR_FUNC){
-//		EEPROM_pfunISR_FUNC();
-//	}
+
+	if(NULL != EEPROM_pfunISR_FUNC){
+		EEPROM_pfunISR_FUNC();
+	}
 }
 
