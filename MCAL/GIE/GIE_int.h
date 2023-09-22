@@ -2,7 +2,8 @@
  * GIE_int.h
  *
  *  Created on: Oct 30, 2021
- *      Author: hamdy
+ *  Author: 	 Hamdy Aouf
+ *	Description: File of Interfaces used to control Global Interrupts of the ATmega32
  */
 
 #ifndef MCAL_GIE_GIE_INT_H_

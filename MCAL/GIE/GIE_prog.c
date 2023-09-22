@@ -2,7 +2,8 @@
  * GIE_prog.c
  *
  *  Created on: Oct 30, 2021
- *      Author: hamdy
+ *  Author: 	 Hamdy Aouf
+ *	Description: Here are all the Interfaces definitions of the GIE
  */
 
 #include "GIE_priv.h"
