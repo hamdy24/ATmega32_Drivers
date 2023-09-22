@@ -119,4 +119,32 @@
 #define SPCR	*((volatile u8*) 0x2d)
 
 
+/*
+ * TWI REGISTERS
+ */
+
+#define TWAR	*((volatile u8*) 0x22)
+#define TWBR	*((volatile u8*) 0x20)
+#define TWCR	*((volatile u8*) 0x56)
+#define TWDR	*((volatile u8*) 0x23)
+#define TWSR	*((volatile u8*) 0x21)
+
+
+/*
+ *	EEPROM REGISTERS
+ */
+
+#define EEARL	*((volatile u8*) 0x3E)
+#define EEARH	*((volatile u8*) 0x3F)
+#define EEAR	*((volatile u16*) 0x3E)
+
+#define EEDR	*((volatile u8*) 0x3D)
+#define EECR	*((volatile u8*) 0x3C)
+
+#define SPMCR	*((volatile u8*) 0x57)
+
+// auto trigger mode select register
+#define SFIOR 	*((volatile u8*) 0x50)
+
+
 #endif /* MCAL_AVR_REG_H_ */

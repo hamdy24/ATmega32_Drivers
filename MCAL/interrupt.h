@@ -39,7 +39,7 @@
 
 #define VECT_ANALOG_COMP		__vector_18
 
-#define VECT_IIC				__vector_19
+#define VECT_TWI				__vector_19
 
 #define VECT_STORE_PROG_RDY		__vector_20
 
