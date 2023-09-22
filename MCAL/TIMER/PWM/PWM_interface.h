@@ -13,7 +13,7 @@
 extern PWM1_t PWM_strPWM1_Config;
 extern PWM_Weak_t PWM_strWeakPWM_Config ;
 
-ES_t PWM_enuInit(PWM1_t Copy_strPWM_Config);
+ES_t PWM_enuInit(PWM1_t * Copy_pstrPWM_Config);
 
 ES_t PWM_enuSetFrequency(u16 Copy_u16Frequency);
 

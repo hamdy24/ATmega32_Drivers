@@ -26,13 +26,13 @@
  *   0		  0		  d		  0		  0		  0		  0		  0	   *
  *******************************************************************/
 
-ES_t PWM_enuInit(PWM1_t Copy_strPWM_Config){
+ES_t PWM_enuInit(PWM1_t * Copy_pstrPWM_Config){
 	ES_t Local_enuErrorState = ES_NOK;
 
-	PWM_Type = Copy_strPWM_Config.PWM_Type;
-	PWM_OC_Mode = Copy_strPWM_Config.PWM_Mode;
+	PWM_Type = Copy_pstrPWM_Config->PWM_Type;
+	PWM_OC_Mode = Copy_pstrPWM_Config->PWM_Mode;
 
-	if(Copy_strPWM_Config.PWM_EnableState == true){
+	if(Copy_pstrPWM_Config->PWM_EnableState == true){
 		/*** Interrupts Initialization ***/
 		TIMSK |=  (MASK_BIT<<OCIE1A); /** Output Compare A Match Interrupt Enabled **/
 		TIMSK |=  (MASK_BIT<<OCIE1B); /** Output Compare B Match Interrupt Enabled **/
@@ -44,42 +44,42 @@ ES_t PWM_enuInit(PWM1_t Copy_strPWM_Config){
 		/*******************************/
 		/*** PWM Mode Initialization ***/
 		/*******************************/
-		if(Copy_strPWM_Config.PWM_Type >= PWM1_PhaseCorrect_8bit
-				&& Copy_strPWM_Config.PWM_Type <= PWM1_Fast_OCR1A){
+		if(Copy_pstrPWM_Config->PWM_Type >= PWM1_PhaseCorrect_8bit
+				&& Copy_pstrPWM_Config->PWM_Type <= PWM1_Fast_OCR1A){
 
 			// Apply get bit mechanism to extract each bit mapped to the WGM bits to apply the change
-			TCCR1A |= (((Copy_strPWM_Config.PWM_Type>>GET_BIT0)&MASK_BIT)<<WGM10); // 14=> 11 10 & 0001 = 0
-			TCCR1A |= (((Copy_strPWM_Config.PWM_Type>>GET_BIT1)&MASK_BIT)<<WGM11); // 14=> 11 10 & 0010 = 1
-			TCCR1B |= (((Copy_strPWM_Config.PWM_Type>>GET_BIT2)&MASK_BIT)<<WGM12); // 14=> 11 10 & 0100 = 1
-			TCCR1B |= (((Copy_strPWM_Config.PWM_Type>>GET_BIT3)&MASK_BIT)<<WGM13); // 14=> 11 10 & 1000 = 1
+			TCCR1A |= (((Copy_pstrPWM_Config->PWM_Type>>GET_BIT0)&MASK_BIT)<<WGM10); // 14=> 11 10 & 0001 = 0
+			TCCR1A |= (((Copy_pstrPWM_Config->PWM_Type>>GET_BIT1)&MASK_BIT)<<WGM11); // 14=> 11 10 & 0010 = 1
+			TCCR1B |= (((Copy_pstrPWM_Config->PWM_Type>>GET_BIT2)&MASK_BIT)<<WGM12); // 14=> 11 10 & 0100 = 1
+			TCCR1B |= (((Copy_pstrPWM_Config->PWM_Type>>GET_BIT3)&MASK_BIT)<<WGM13); // 14=> 11 10 & 1000 = 1
 
 			/*******************************************/
 			/*********** OUTPUT COMPARE MODE ***********/
 			/*******************************************/
 			// Case Fast PWM
-			if((Copy_strPWM_Config.PWM_Type >= PWM1_Fast_8bit
-					&& Copy_strPWM_Config.PWM_Type <= PWM1_Fast_10bit)
-					|| Copy_strPWM_Config.PWM_Type == PWM1_Fast_ICR1
-					|| Copy_strPWM_Config.PWM_Type == PWM1_Fast_OCR1A ){
+			if((Copy_pstrPWM_Config->PWM_Type >= PWM1_Fast_8bit
+					&& Copy_pstrPWM_Config->PWM_Type <= PWM1_Fast_10bit)
+					|| Copy_pstrPWM_Config->PWM_Type == PWM1_Fast_ICR1
+					|| Copy_pstrPWM_Config->PWM_Type == PWM1_Fast_OCR1A ){
 
-				if(Copy_strPWM_Config.PWM_Mode == OC_InvertingMode){  // Clear on OCR
-					if(Copy_strPWM_Config.PWM_Channel == PWM1_OC_ChannelA_B){
+				if(Copy_pstrPWM_Config->PWM_Mode == OC_InvertingMode){  // Clear on OCR
+					if(Copy_pstrPWM_Config->PWM_Channel == PWM1_OC_ChannelA_B){
 						TCCR1A |= (INVERTING<<COM1A0);
 						TCCR1A |= (INVERTING<<COM1B0);
 					}
-					else if(Copy_strPWM_Config.PWM_Channel  == PWM1_OC_ChannelA){
+					else if(Copy_pstrPWM_Config->PWM_Channel  == PWM1_OC_ChannelA){
 						TCCR1A |= (INVERTING<<COM1A0);
 					}
 					else{
 						TCCR1A |= (INVERTING<<COM1B0);
 					}
 				}
-				else if(Copy_strPWM_Config.PWM_Mode == OC_Non_InvertingMode){ // Set on OCR
-					if(Copy_strPWM_Config.PWM_Channel == PWM1_OC_ChannelA_B){
+				else if(Copy_pstrPWM_Config->PWM_Mode == OC_Non_InvertingMode){ // Set on OCR
+					if(Copy_pstrPWM_Config->PWM_Channel == PWM1_OC_ChannelA_B){
 						TCCR1A |= (NON_INVERTING<<COM1A0);
 						TCCR1A |= (NON_INVERTING<<COM1B0);
 					}
-					else if(Copy_strPWM_Config.PWM_Channel  == PWM1_OC_ChannelA){
+					else if(Copy_pstrPWM_Config->PWM_Channel  == PWM1_OC_ChannelA){
 						TCCR1A |= (NON_INVERTING<<COM1A0);
 					}
 					else{
@@ -88,30 +88,30 @@ ES_t PWM_enuInit(PWM1_t Copy_strPWM_Config){
 				}
 			}
 			// Case Phase or Phase and frequency Correct PWM
-			else if((Copy_strPWM_Config.PWM_Type >= PWM1_PhaseCorrect_8bit
-					&& Copy_strPWM_Config.PWM_Type <= PWM1_PhaseCorrect_10bit)
-					|| Copy_strPWM_Config.PWM_Type == PWM1_PhaseFrequencyCorrect_ICR1
-					|| Copy_strPWM_Config.PWM_Type == PWM1_PhaseCorrect_OCR1A ){
+			else if((Copy_pstrPWM_Config->PWM_Type >= PWM1_PhaseCorrect_8bit
+					&& Copy_pstrPWM_Config->PWM_Type <= PWM1_PhaseCorrect_10bit)
+					|| Copy_pstrPWM_Config->PWM_Type == PWM1_PhaseFrequencyCorrect_ICR1
+					|| Copy_pstrPWM_Config->PWM_Type == PWM1_PhaseCorrect_OCR1A ){
 
-				if(Copy_strPWM_Config.PWM_Mode == OC_InvertingMode){  // Set up counting
-					if(Copy_strPWM_Config.PWM_Channel == PWM1_OC_ChannelA_B){
+				if(Copy_pstrPWM_Config->PWM_Mode == OC_InvertingMode){  // Set up counting
+					if(Copy_pstrPWM_Config->PWM_Channel == PWM1_OC_ChannelA_B){
 						TCCR1A |= (NON_INVERTING<<COM1A0);
 						TCCR1A |= (NON_INVERTING<<COM1B0);
 					}
-					else if(Copy_strPWM_Config.PWM_Channel  == PWM1_OC_ChannelA){
+					else if(Copy_pstrPWM_Config->PWM_Channel  == PWM1_OC_ChannelA){
 						TCCR1A |= (NON_INVERTING<<COM1A0);
 					}
 					else{
 						TCCR1A |= (NON_INVERTING<<COM1B0);
 					}
 				}
-				else if(Copy_strPWM_Config.PWM_Mode == OC_Non_InvertingMode){ // Clear up counting
+				else if(Copy_pstrPWM_Config->PWM_Mode == OC_Non_InvertingMode){ // Clear up counting
 			//		if(Copy_strPWM_Config.PWM_Mode == OC_InvertingMode){  // Clear on OCR
-						if(Copy_strPWM_Config.PWM_Channel == PWM1_OC_ChannelA_B){
+						if(Copy_pstrPWM_Config->PWM_Channel == PWM1_OC_ChannelA_B){
 							TCCR1A |= (INVERTING<<COM1A0);
 							TCCR1A |= (INVERTING<<COM1B0);
 						}
-						else if(Copy_strPWM_Config.PWM_Channel  == PWM1_OC_ChannelA){
+						else if(Copy_pstrPWM_Config->PWM_Channel  == PWM1_OC_ChannelA){
 							TCCR1A |= (INVERTING<<COM1A0);
 						}
 						else{
