@@ -22,26 +22,14 @@ typedef float                 f32  ;
 typedef double                f64  ;
 typedef long double           f80  ;
 
-#define NULL 		     		(void*)0
-
-#ifndef F_CPU
-#define F_CPU					16000000
-#endif
-
-#ifndef MASK_BIT
-#define MASK_BIT			  1
-#endif
+typedef volatile void (*CallBackFunc_t)(void);
 
 typedef enum{
 	false,
 	true,
 }bool;
 
+#define NULL 		     		(void*)0
 
-
-
-#ifndef F_CPU
-#define F_CPU				16000000ul
-#endif
 
 #endif /* STDTYPES_H_ */

@@ -13,7 +13,8 @@ typedef enum {
 	ES_NOK ,
 	ES_OK ,
 	ES_OUT_OF_RANGE ,
-	ES_POINTER_TO_VOID
+	ES_POINTER_TO_VOID,
+	ES_TWI_ERROR,
 }ES_t;
 
 

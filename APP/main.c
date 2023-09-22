@@ -7,20 +7,19 @@
 #include "../LIBRARIES/stdTypes.h"
 #include "../LIBRARIES/errorstate.h"
 
-#include "../HAL/ServoSG90/ServoSG90_interface.h"
 #include "../HAL/LCD/LCD_int.h"
 
-#include "../MCAL/DIO/DIO_int.h"
-#include "../MCAL/PWM/PWM_interface.h"
-#include "../MCAL/GIE/GIE_int.h"
-#include "../MCAL/ICU_HW/ICU_Interface.h"
 
+#include <util/delay.h>
 
+#define DELAY		1000
 
 int main()
 {
+	LCD_enuInit();
 
 	while(1){
+
 
 
 	}
