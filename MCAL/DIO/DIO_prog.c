@@ -2,7 +2,8 @@
  * prog.h
  *
  *  Created on: Sep 28, 2021
- *      Author: hamdy
+ *  Author: 	 Hamdy Aouf
+ *	Description: File of Interfaces used to control the GPIOs of the ATmega32
  */
 
 #include "DIO_priv.h"

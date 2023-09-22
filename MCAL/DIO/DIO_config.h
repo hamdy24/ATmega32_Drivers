@@ -1,8 +1,9 @@
 /*
- * config.h
+ * DIO_config.h
  *
  *  Created on: Sep 28, 2021
- *      Author: hamdy
+ *  Author: 	 Hamdy Aouf
+ *	Description: Here are all the Interfaces definitions of the GPIOs
  */
 
 #ifndef DIO_CONFIG_H_

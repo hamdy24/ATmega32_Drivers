@@ -2,7 +2,8 @@
  * priv.h
  *
  *  Created on: Sep 28, 2021
- *      Author: hamdy
+ *  Author: 	 Hamdy Aouf
+ *	Description: Here are private macros and declarations related to the GPIOs
  */
 
 #ifndef _PRIV_H_
@@ -12,6 +13,8 @@
 
 #include "../../LIBRARIES/stdTypes.h"
 #include "../../LIBRARIES/errorstate.h"
+#include "../../LIBRARIES/common.h"
+
 
 #define DIO_u8PORTA 			0
 #define DIO_u8PORTB 			1

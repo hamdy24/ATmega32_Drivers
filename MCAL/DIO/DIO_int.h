@@ -1,8 +1,9 @@
 /*
- * int.h
+ * DIO_int.h
  *
  *  Created on: Sep 28, 2021
- *      Author: hamdy
+ *  Author: 	 Hamdy Aouf
+ *	Description: File of Interfaces used to control the GPIOs of the ATmega32
  */
 
 #ifndef INT_H
