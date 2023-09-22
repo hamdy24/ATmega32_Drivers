@@ -13,7 +13,7 @@
 /* Use This in APP Initialization for ICU*/
 extern ICU_Cfg_t ICU_Configs;
 
-ES_t ICU_enuInit(ICU_Cfg_t Copy_strConfigs);
+ES_t ICU_enuInit(ICU_Cfg_t * Copy_pstrConfigs);
 ES_t ICU_enuGetDutyCycle(f32 * Copy_pf32DutyCycle);
 ES_t ICU_enuGetFrequency(u16 * Copy_pu16Frequency);
 ES_t ICU_enuGetPulseWidth(u16 * Copy_pu16PulseWidth);

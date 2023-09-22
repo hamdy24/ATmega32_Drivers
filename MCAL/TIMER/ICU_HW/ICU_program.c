@@ -9,35 +9,35 @@
 #include "ICU_Private.h"
 
 
-ES_t ICU_enuInit(ICU_Cfg_t Copy_strConfigs){
+ES_t ICU_enuInit(ICU_Cfg_t * Copy_pstrConfigs){
 	ES_t Local_enuErorrState = ES_NOK;
 
 	    // Set Timer1 to Normal mode
 	    TCCR1A = 0;
 	    TCCR1B = 0;
-	    if(Copy_strConfigs.NoiseCanceler_EN == true){
+	    if(Copy_pstrConfigs->NoiseCanceler_EN == true){
 		    TCCR1B |=  (MASK_BIT << ICNC1);
 	    }
-	    else if(Copy_strConfigs.NoiseCanceler_EN == false){
+	    else if(Copy_pstrConfigs->NoiseCanceler_EN == false){
 		    TCCR1B &= ~(MASK_BIT << ICNC1);
 	    }
 	    else
 	    	Local_enuErorrState = ES_OUT_OF_RANGE;
 
-	    if(Copy_strConfigs.EdgeSelect == ICU_RisingEdge){
+	    if(Copy_pstrConfigs->EdgeSelect == ICU_RisingEdge){
 		    TCCR1B |=  (MASK_BIT << ICES1);
 	    }
-	    else if(Copy_strConfigs.EdgeSelect == ICU_FallingEdge){
+	    else if(Copy_pstrConfigs->EdgeSelect == ICU_FallingEdge){
 		    TCCR1B &= ~(MASK_BIT << ICES1);
 	    }
 	    else
 	    	Local_enuErorrState = ES_OUT_OF_RANGE;
 
 
-	    if(Copy_strConfigs.ICU_Prescaler <= ICU_T1_Rising
-	    		&& Copy_strConfigs.ICU_Prescaler >= ICU_PRES_Disabled){
-		    TCCR1B |=  (Copy_strConfigs.ICU_Prescaler << CS10);
-		    ICU_Pres = ICU_Prescalers[Copy_strConfigs.ICU_Prescaler];
+	    if(Copy_pstrConfigs->ICU_Prescaler <= ICU_T1_Rising
+	    		&& Copy_pstrConfigs->ICU_Prescaler >= ICU_PRES_Disabled){
+		    TCCR1B |=  (Copy_pstrConfigs->ICU_Prescaler << CS10);
+		    ICU_Pres = ICU_Prescalers[Copy_pstrConfigs->ICU_Prescaler];
 	    }
 	    else
 	    	Local_enuErorrState = ES_OUT_OF_RANGE;
